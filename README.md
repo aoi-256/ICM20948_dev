@@ -10,7 +10,13 @@
 
 # 万一これを使おうという方へ
 
-[データシート](https://invensense.tdk.com/wp-content/uploads/2024/03/DS-000189-ICM-20948-v1.6.pdf)と、[(マイクロソフトの検索AI](https://www.bing.com/chat?form=NTPCHB)を使うと
+知り合いに見せるように公開設定にしていますが、万一外部の方で使おうと考えてしまった場合、
+
+[データシート](https://invensense.tdk.com/wp-content/uploads/2024/03/DS-000189-ICM-20948-v1.6.pdf)
+
+[マイクロソフトの検索AI](https://www.bing.com/chat?form=NTPCHB)
+
+を使うとこれの100倍いいコードを自作することができますので、ぜひ挑戦してください！
 
 もっとよいものを簡単に作れるので、ぜひ自作してみてください！
 
