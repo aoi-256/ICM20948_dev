@@ -8,6 +8,12 @@
 
 一通り完成したら関数の使い方などのメモを書きます
 
+# 万一これを使おうという方へ
+
+[データシート](https://invensense.tdk.com/wp-content/uploads/2024/03/DS-000189-ICM-20948-v1.6.pdf)と、[(マイクロソフトの検索AI](https://www.bing.com/chat?form=NTPCHB)を使うと
+
+もっとよいものを簡単に作れるので、ぜひ自作してみてください！
+
 # sample code 
 
 クラス名がsensorなの、他のライブラリとかと競合しそうでよくない、、
