@@ -2,13 +2,11 @@
 #include "icm20948.h"
 #include "AK09916.h"
 #include "AK09916_HAL_I2C.h"
-#include "est_angle.h"
 #include "usart.h"
 #include <string>
 
 ICM20948 icm20948; //i2c2を使う設定（変更機能→未実装）
 AK09916_HAL_I2C ak09916(&hi2c2, AK09916::I2C_ADDRESS::LOW);
-EST_ANGLE est_angle;
 
 void AK09916_setup();
 void send_value(float* angle_data);
@@ -26,6 +24,7 @@ void init(){
 
 void loop(){
 
+//時間測定用
 //	DWT->CYCCNT = 0;
 //	DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
 //	uint64_t start = DWT->CYCCNT;
@@ -35,22 +34,15 @@ void loop(){
 	static float gyro_buffer[3]  = {};
 	static int16_t mag_buffer[3]   = {};
 
-	//angle data
-	static float angle_buffer[3] = {};
-
+//時間測定用
 //	for(uint16_t i=0; i < 1000; i++){
 
 	//値の取得
 	icm20948.get_value(accel_buffer, gyro_buffer);
 	ak09916.getMagnet(mag_buffer);
 
-	//姿勢推定
-//	est_angle.input_value(accel_buffer, gyro_buffer, mag_buffer);
-//	est_angle.output_value(angle_buffer);
 
-	//データの送信
-//	send_value(angle_buffer);
-
+//時間測定用
 //	}
 //	uint64_t end = DWT->CYCCNT;
 //	uint64_t cycles = end - start;
