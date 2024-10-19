@@ -4,10 +4,9 @@
 #include <string>
 
 ICM20948 icm20948; //i2c2を使う設定（変更機能→未実装）
-//AK09916_HAL_I2C ak09916(&hi2c2, AK09916::I2C_ADDRESS::LOW);
-//
-//void AK09916_setup();
-void send_value(float* angle_data);
+
+//debug
+// void send_value(float* angle_data);
 
 uint32_t count = 0;
 
@@ -33,23 +32,25 @@ void loop(){
 	//値の取得
 	icm20948.get_sensor_value(accel_buffer, gyro_buffer, mag_buffer);
 
-	if(count % 50 == 0 && mag_buffer[0] != 0){
+	//debug用 中身を見たいbufferの名前をsend_value関数に入れるとurat2から出力される
+	// if(count % 50 == 0 && mag_buffer[0] != 0){
 
-		send_value(mag_buffer);
-	}
-	count ++;
+	// 	send_value(mag_buffer);
+	// }
+	// count ++;
 }
 
-void send_value(float* angle_data){
+//debug
+// void send_value(float* angle_data){
 
-	int16_t send_data[3];
+// 	int16_t send_data[3];
 
-	send_data[0] = (int16_t)(angle_data[0]);
-	send_data[1] = (int16_t)(angle_data[1]);
-	send_data[2] = (int16_t)(angle_data[2]);
+// 	send_data[0] = (int16_t)(angle_data[0]);
+// 	send_data[1] = (int16_t)(angle_data[1]);
+// 	send_data[2] = (int16_t)(angle_data[2]);
 
-	std::string str = std::to_string(send_data[0]) + " " + std::to_string(send_data[1]) + " " + std::to_string(send_data[2]) + "\n";
+// 	std::string str = std::to_string(send_data[0]) + " " + std::to_string(send_data[1]) + " " + std::to_string(send_data[2]) + "\n";
 
-	HAL_UART_Transmit(&huart2, (uint8_t *)str.c_str(), str.length(), 100);
+// 	HAL_UART_Transmit(&huart2, (uint8_t *)str.c_str(), str.length(), 100);
 
-}
+// }
