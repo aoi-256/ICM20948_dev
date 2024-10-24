@@ -157,13 +157,8 @@ void ICM20948::selectUserBank(uint8_t num){
 void ICM20948::get_sensor_value(float* accel_buffer, float* gyro_buffer, float* mag_buffer){
 
 	ICM20948_getdata(accel_buffer, gyro_buffer);
+	AK09916_getdata(mag_buffer);
 
-	if(getdata_count % 11 == 0){
-
-		AK09916_getdata(mag_buffer);
-		getdata_count = 1;
-	}
-	getdata_count ++;
 }
 
 void ICM20948::ICM20948_calibration(){
@@ -319,8 +314,33 @@ void ICM20948::ICM20948_getdata(float *accel_buffer, float *gyro_buffer){
 
 void ICM20948::AK09916_getdata(float* mag_buffer){
 
+	uint8_t magdata_status[2] = {};
+//	mag_buffer[0]   = 0;
+//	mag_buffer[1]   = 0;
+//	mag_buffer[2]   = 0;
 
+	selectUserBank(3);
 
+	//地磁気センサーの状態を確認
+	AK09916_read(0x10, &magdata_status[0], 1);
+	AK09916_read(0x18, &magdata_status[1], 1);
+
+	if((magdata_status[0] & 0x08) == 0){
+
+		AK09916_read(0x11, &data_buffer[14], 6);
+
+		mag_buffer[0]  = (float)((int16_t)(data_buffer[15] << 8 | data_buffer[14]));
+		mag_buffer[1]  = (float)((int16_t)(data_buffer[17] << 8 | data_buffer[16]));
+		mag_buffer[2]  = (float)((int16_t)(data_buffer[19] << 8 | data_buffer[18]));
+
+		if(mag_buffer[0] > 5000 || mag_buffer[1] > 5000 || mag_buffer[2] > 5000 || mag_buffer[0] < -5000 || mag_buffer[1] < -5000 || mag_buffer[2] < -5000 ){
+
+			mag_buffer[0]   = 0;
+			mag_buffer[1]   = 0;
+			mag_buffer[2]   = 0;
+
+		}
+	}
+	selectUserBank(0);
 }
-
 /*----------------------------------------------------------------------------------------*/
