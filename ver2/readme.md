@@ -3,10 +3,12 @@
 ## 変更の概要
 
 加速度センサーの精度向上（LFPの導入）
+
 実行速度の向上
 
 ## サンプルコード
 
+### wrapper.cpp
 ```cpp
 #include "wrapper.hpp"
 #include "ICM20948.h"
