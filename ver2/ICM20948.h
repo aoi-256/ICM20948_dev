@@ -103,6 +103,10 @@ class ICM20948 {
 		float gyro_y[10] = {};
 		float gyro_z[10] = {};
 
+		float mag_x[5] = {};
+		float mag_y[5] = {};
+		float mag_z[5] = {};
+
 		//loop_count
 		uint64_t icm20948_count = 0;
 		uint8_t getdata_count = 0;//地磁気の取得タイミング調整用
