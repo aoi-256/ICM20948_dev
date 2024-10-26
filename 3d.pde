@@ -14,11 +14,12 @@ void draw() {
   background(200);
   lights();
   
-  // 3Dモデルの描画
+　　// 3ðモデルの描画
   translate(width/2, height/2, 0);
   rotateX(angleX);
-  //rotateY(angleY);
-  rotateY(0);
+  //rotateY(angleY); ヨー方向の有効化
+  rotateY(0);//ヨー方向の無効化
+
   rotateZ(angleZ);
   drawRectangularPrism(100, 50, 150); // 幅、高さ、奥行きを指定
   
