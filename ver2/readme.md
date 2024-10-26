@@ -32,10 +32,13 @@ void loop(){
 	static float angle_buffer[3] = {};
 
 
-  icm20948.get_sensor_value(accel_buffer, gyro_buffer, mag_buffer);
+	icm20948.get_sensor_value(accel_buffer, gyro_buffer, mag_buffer);
 
-  //計算結果をsend_value()で送信
-  send_value(angle_buffer);
+	if(count%10 == 0){
+
+		send_value(mag_buffer);
+	}
+	count++;
 }
 
 void send_value(float* angle_data){
