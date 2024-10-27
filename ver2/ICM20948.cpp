@@ -320,8 +320,8 @@ void ICM20948::AK09916_getdata(float* mag_buffer){
 	if((magdata_status[0] & 0x01) == 0){
 
 		AK09916_read(0x11, &data_buffer[14], 6);
-		AK09916_read(0x11, &data_buffer[14], 6);
-		AK09916_read(0x11, &data_buffer[14], 6);
+		AK09916_read(0x11, &data_buffer[14], 1);
+		AK09916_read(0x11, &data_buffer[14], 1);
 
 		mag_x[0]  = (float)((int16_t)(data_buffer[15] << 8 | data_buffer[14]));
 		mag_y[0]  = (float)((int16_t)(data_buffer[17] << 8 | data_buffer[16]));
