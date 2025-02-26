@@ -45,6 +45,7 @@ TeraTermなどを使ってデータを確認することができます
 
 ICM20948 icm(&hi2c2);
 
+void Send_Data(int16_t Data[3]);
 int16_t Accel_Data[3] = {};
 int16_t Gyro_Data[3] = {};
 
@@ -59,6 +60,17 @@ void init(){
 void loop(){
 
 	icm.Get_Data(Accel_Data, Gyro_Data);
+
+	Send_Data(Accel_Data);
+	Send_Data(Gyro_Data);
+	HAL_Delay(10);
+}
+
+void Send_Data(int16_t Data[3]){
+
+	str = std::to_string(Data[0]) + " " + std::to_string(Data[1]) + " " + std::to_string(Data[2]) + "\n";
+
+	HAL_UART_Transmit(&huart2, (uint8_t *)str.c_str(),str.length(),100);
 }
 ```
 
