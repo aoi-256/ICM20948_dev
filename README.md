@@ -8,21 +8,18 @@ I2CのStandard・Fast Modeに対応しています
 
 ### 設定変更について
 
-Config関数の引数は、Enumで定義してあるので、```icm.Mode::```まで入力すると候補が出てきます
+Config関数の引数は、Enumで定義してあるので、```icm.Scale::```まで入力すると候補が出てきます
 
 センサーの設定で選べるものはすべて定義したので、選んで使ってください
 
-![スクリーンショット (493)](https://github.com/user-attachments/assets/1dff5040-14f2-4d4b-9303-17537af35aec)
-
-
 ### エラー処理について
 
-**Connection**・**Config**関数は、エラー時の戻り値が違います
+**Connection**・**Activation**・**Config**関数は、エラー時の戻り値が違います
 
 (Get_Data関数はエラー時に1つ前の値を返すようにしています）
 
 実際にシステムに組み込む際には、戻り値が0であることを確認することをおすすめします
-
+ 
 ```cpp
 if( icm.Connection() != 0){
 
@@ -77,4 +74,3 @@ void Send_Data(int16_t Data[3]){
 ## アップデートについて
 
 - Get_Data関数のエラー判定と処理を追加する予定です
-- SPI通信版も作成中です
