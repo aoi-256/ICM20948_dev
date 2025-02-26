@@ -36,7 +36,6 @@ TeraTermなどを使ってデータを確認することができます
 ```cpp
 #include "wrapper.hpp"
 #include "usart.h"
-#include "tim.h"
 #include "i2c.h"
 #include "ICM20948.h"
 
