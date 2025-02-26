@@ -1,49 +1,68 @@
 # STM32 ICM20948 I2C (6軸バージョン）
 
+ICM20948の6軸のデータが取れるコードです
 
-## sample code 
+## 使い方
 
-クラス名がsensorなの、他のライブラリとかと競合しそうでよくない、、
+I2CのStandard・Fast Modeに対応しています
 
-LPFはただ平均値取ってるだけなので精度を信用しちゃいけない
+### 設定変更について
 
-加速度と角速度をいい感じに混ぜて値の精度をあげたい
+Config関数の引数は、Enumで定義してあるので、```icm.Mode::```まで入力すると候補が出てきます
+
+センサーの設定で選べるものはすべて定義したので、選んで使ってください
+
+![スクリーンショット (493)](https://github.com/user-attachments/assets/1dff5040-14f2-4d4b-9303-17537af35aec)
+
+
+### エラー処理について
+
+**Connection**・**Config**関数は、エラー時の戻り値が違います
+
+(Get_Data関数はエラー時に1つ前の値を返すようにしています）
+
+実際にシステムに組み込む際には、戻り値が0であることを確認することをおすすめします
+
+```cpp
+if( icm.Connection() != 0){
+
+	//通信エラーが発生したときの処理
+}
+```
+
+## Sample Code
+
+UART2を使って、取得したデータを一定間隔ごとに送信しています
+
+TeraTermなどを使ってデータを確認することができます
 
 ```cpp
 #include "wrapper.hpp"
+#include "usart.h"
+#include "tim.h"
 #include "i2c.h"
-#include "sensor.h"
+#include "ICM20948.h"
 
-Sensor sensor;
+ICM20948 icm(&hi2c2);
+
+int16_t Accel_Data[3] = {};
+int16_t Gyro_Data[3] = {};
 
 void init(){
 
-    sensor.setup();
-
+	icm.Connection();
+	icm.Activation();
+	icm.Accel_Config(icm.Accel_Scale::scale_2g, icm.FCHOICE::Enable, icm.DLPFCFG::Setting_6, icm.Accel_Ave::x1);
+	icm.Gyro_Config(icm.Gyro_Scale::dps_0250, icm.FCHOICE::Enable, icm.DLPFCFG::Setting_6, icm.Gyro_Ave::x1);
 }
 
 void loop(){
 
-
-  sensor.get_accelvalue();
-  sensor.get_gyrovalue();
-
-  sensor.accel_LPF();
-  sensor.gyro_LPF();
-
-  sensor.estimate_angle();
-  sensor.store_value();
-
+	icm.Get_Data(Accel_Data, Gyro_Data);
 }
-
 ```
 
-3dの描画について
+## アップデートについて
 
-processing4を使っています
-
-データはシリアルで
-```
-"x軸の角度" "y軸の角度" "z軸の角度" \n
-```
-スペースで分割して、改行コードで末端を管理しています
+- Get_Data関数のエラー判定と処理を追加する予定です
+- SPI通信版も作成中です
